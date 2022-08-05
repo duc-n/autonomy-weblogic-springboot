@@ -1,0 +1,15 @@
+server:
+   port: 8888
+   servlet.context-path: autonomy
+   
+#datasource
+spring:
+   datasource:
+      jndi-name: jdbc/autonomy
+      #driver.class: oracle.jdbc.driver.OracleDriver
+   jpa:
+      #disable schema generation from Hibernate
+      hibernate.ddl-auto: none
+      #DB dialect - override default one      
+      #database-platform: org.hibernate.dialect.Oracle10cDialect   
+      
