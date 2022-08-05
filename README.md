@@ -9,3 +9,9 @@ Important things to note :
 	
 	-  Run the command from : C:\Dev\Oracle\Weblogic12.2.1.3.0\oracle_common\plugins\maven\com\oracle\maven\oracle-maven-sync\12.2.1>mvn install:install-file -DpomFile=oracle-maven-sync-12.2.1.pom -Dfile=oracle-maven-sync-12.2.1.jar
 	- mvn com.oracle.maven:oracle-maven-sync:push -DoracleHome=C:\Dev\Oracle\Weblogic12.2.1.3.0\
+	
+2. When deploying the application to weblogic from Eclipse, if there is a error Web 4 not supported:
+Modify the file org.eclipse.wst.common.project.facet.core.xml in the .settings directory :
+<installed facet="jst.web" version="3.0"/>
+
+un fichier org.eclipse.wst.common.project.facet.core.xml

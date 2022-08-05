@@ -5,11 +5,30 @@ server:
 #datasource
 spring:
    datasource:
-      jndi-name: jdbc/autonomy
-      #driver.class: oracle.jdbc.driver.OracleDriver
+      # Oracle settings
+      
+      #Uncomment if we want to connect to oracle by using the JNDI
+      #jndi-name: jdbc/autonomy
+      url: jdbc:oracle:thin:@devscan1.coface.dns:1521/pdbgridpadv
+      username: autonomy
+      password: autonomy
+      driver-class-name: oracle.jdbc.driver.OracleDriver
+      
+      # HikariCP settings
+      hikari: 
+         minimumIdle: 5
+         maximumPoolSize: 20
+         idleTimeout: 30000
+         maxLifetime: 2000000
+         connectionTimeout: 30000
+      
+
    jpa:
       #disable schema generation from Hibernate
-      hibernate.ddl-auto: none
+      show-sql: true
+      hibernate.ddl-auto: none      
       #DB dialect - override default one      
-      #database-platform: org.hibernate.dialect.Oracle10cDialect   
+      database-platform: org.hibernate.dialect.Oracle10gDialect                             
+     
+      
       

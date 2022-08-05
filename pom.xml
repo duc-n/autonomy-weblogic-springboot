@@ -25,10 +25,14 @@
 	</properties>
 
 	<dependencies>
-		<!-- 	SpringBoot dependency -->
+		<!-- SpringBoot dependency -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-security</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -55,11 +59,11 @@
 				</exclusion>
 			</exclusions>
 		</dependency>
-		<!-- <dependency> -->
-		<!-- <groupId>com.oracle.database.jdbc</groupId> -->
-		<!-- <artifactId>ojdbc8</artifactId> -->
-		<!-- <scope>12.2.0.1</scope> -->
-		<!-- </dependency> -->
+		<dependency>
+			<groupId>com.oracle.database.jdbc</groupId>
+			<artifactId>ojdbc8</artifactId>
+			<!-- <scope>provided</scope> -->
+		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
@@ -71,6 +75,12 @@
 				</exclusion>
 			</exclusions>
 		</dependency>
+
+<!-- 		<dependency> -->
+<!-- 			<groupId>com.coface.corp.autonomy</groupId> -->
+<!-- 			<artifactId>autonomy-core</artifactId> -->
+<!-- 			<version>1.77.2.1</version> -->
+<!-- 		</dependency> -->
 
 	</dependencies>
 
