@@ -12,7 +12,7 @@
 	</parent>
 
 	<groupId>com.cele</groupId>
-	<artifactId>autonomy</artifactId>
+	<artifactId>autonomyWeb</artifactId>
 	<version>1.0.0</version>
 	<name>springboot-weblogic</name>
 
@@ -25,7 +25,7 @@
 	</properties>
 
 	<dependencies>
-<!-- 	SpringBoot dependency -->
+		<!-- 	SpringBoot dependency -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
@@ -71,12 +71,6 @@
 				</exclusion>
 			</exclusions>
 		</dependency>
-
-		<!-- <dependency> -->
-		<!-- <groupId>org.springframework.boot</groupId> -->
-		<!-- <artifactId>spring-boot-legacy</artifactId> -->
-		<!-- <version>2.1.0.RELEASE</version> -->
-		<!-- </dependency> -->
 
 	</dependencies>
 
@@ -124,7 +118,7 @@
 							<user>weblogic</user>
 							<password>weblogic</password>
 							<!--The location of the file or directory to be deployed -->
-							<source>${basedir}/target/${project.artifactId}.war
+							<source>${basedir}/target/${project.build.finalName}.war
 							</source>
 							<!--The target servers where the application is deployed. Here use 
 								the plugin's default value AdminServer -->
