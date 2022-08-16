@@ -15,3 +15,6 @@ Modify the file org.eclipse.wst.common.project.facet.core.xml in the .settings d
 <installed facet="jst.web" version="3.0"/>
 
 un fichier org.eclipse.wst.common.project.facet.core.xml
+
+3. Add log4j2 configuration in the cofaceSetenv.cmd :
+set JAVA_OPTIONS=%JAVA_OPTIONS% -Dlog4j2.configurationFile=file:%CONFIG_PATH%\log4j2.xml
