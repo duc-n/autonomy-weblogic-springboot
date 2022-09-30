@@ -24,6 +24,7 @@
 		<surefireArgLine>-Xmx640m</surefireArgLine>
 		<carbase.version>10.211</carbase.version>
 		<framework.version>4.12.2</framework.version>
+		<framework-security.version>LATEST</framework-security.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<log4j2.version>2.17.1</log4j2.version>
 		<lombok.version>1.18.4</lombok.version>
@@ -55,10 +56,10 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
 		</dependency>
-		<!-- <dependency> -->
-		<!-- <groupId>org.springframework.boot</groupId> -->
-		<!-- <artifactId>spring-boot-starter-security</artifactId> -->
-		<!-- </dependency> -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-security</artifactId>
+		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-tomcat</artifactId>
@@ -101,7 +102,11 @@
 				</exclusion>
 			</exclusions>
 		</dependency>
-
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>javax.servlet-api</artifactId>
+			<version>4.0.1</version>
+		</dependency>
 		<dependency>
 			<groupId>org.projectlombok</groupId>
 			<artifactId>lombok</artifactId>
@@ -120,6 +125,11 @@
 			<artifactId>core</artifactId>
 			<version>${framework.version}</version>
 			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>com.coface.corp.framework.security</groupId>
+			<artifactId>framework-security</artifactId>
+			<version>${framework-security.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>com.coface.corp.base</groupId>
