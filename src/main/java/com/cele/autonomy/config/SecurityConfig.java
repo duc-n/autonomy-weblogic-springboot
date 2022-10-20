@@ -1,10 +1,9 @@
 package com.cele.autonomy.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
-import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
@@ -12,46 +11,55 @@ import org.springframework.security.core.userdetails.UserDetailsByNameServiceWra
 import org.springframework.security.web.authentication.preauth.PreAuthenticatedAuthenticationProvider;
 import org.springframework.security.web.authentication.preauth.PreAuthenticatedAuthenticationToken;
 import org.springframework.security.web.authentication.preauth.RequestHeaderAuthenticationFilter;
-import org.springframework.web.filter.GenericFilterBean;
 import com.cele.autonomy.security.UserService;
 import lombok.AllArgsConstructor;
 
 
 @Configuration
-@EnableGlobalMethodSecurity(prePostEnabled = true)
-@EnableWebSecurity
+@EnableWebSecurity(debug = true)
 @AllArgsConstructor
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
+  @Autowired
   private UserService userService;
 
   @Override
   protected void configure(final HttpSecurity http) throws Exception {
-    http.authorizeRequests().antMatchers("/ping").permitAll().antMatchers("/resources/**").permitAll().anyRequest().authenticated();
+
+    http.addFilterAfter(siteminderFilter(), RequestHeaderAuthenticationFilter.class).authenticationProvider(preauthAuthProvider()).csrf().disable()
+        .authorizeRequests().antMatchers("/resources/**").permitAll().antMatchers("/ping").permitAll().anyRequest().authenticated();
 
   }
+
 
   @Autowired
-  @Override
-  protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-    super.configure(auth);
-    auth.authenticationProvider(preAuthProvider());
+  public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
+    auth.authenticationProvider(preauthAuthProvider());
   }
 
-  private AuthenticationProvider preAuthProvider() {
-    PreAuthenticatedAuthenticationProvider preAuthProvider = new PreAuthenticatedAuthenticationProvider();
-    preAuthProvider.setPreAuthenticatedUserDetailsService(new UserDetailsByNameServiceWrapper<PreAuthenticatedAuthenticationToken>(userService));
-    return preAuthProvider;
+  @Bean(name = "siteminderFilter")
+  public RequestHeaderAuthenticationFilter siteminderFilter() throws Exception {
+    RequestHeaderAuthenticationFilter requestHeaderAuthenticationFilter = new RequestHeaderAuthenticationFilter();
+    requestHeaderAuthenticationFilter.setPrincipalRequestHeader("SM_USER");
+    requestHeaderAuthenticationFilter.setAuthenticationManager(authenticationManager());
+    requestHeaderAuthenticationFilter.setInvalidateSessionOnPrincipalChange(true);
+    requestHeaderAuthenticationFilter.setCheckForPrincipalChanges(true);
+    return requestHeaderAuthenticationFilter;
   }
 
 
-  protected GenericFilterBean siteMinderFilter() throws Exception {
-    RequestHeaderAuthenticationFilter filter = new RequestHeaderAuthenticationFilter();
-    // Default value is SM_USER filter.setPrincipalRequestHeader("SM_USER")
-    filter.setContinueFilterChainOnUnsuccessfulAuthentication(false);
-    filter.setExceptionIfHeaderMissing(false);
-    filter.setAuthenticationManager(authenticationManager());
-    return filter;
+  // @Bean(name = "preAuthProvider")
+  PreAuthenticatedAuthenticationProvider preauthAuthProvider() throws Exception {
+    PreAuthenticatedAuthenticationProvider provider = new PreAuthenticatedAuthenticationProvider();
+    provider.setPreAuthenticatedUserDetailsService(userDetailsServiceWrapper());
+    return provider;
+  }
+
+  @Bean
+  UserDetailsByNameServiceWrapper<PreAuthenticatedAuthenticationToken> userDetailsServiceWrapper() throws Exception {
+    UserDetailsByNameServiceWrapper<PreAuthenticatedAuthenticationToken> wrapper = new UserDetailsByNameServiceWrapper<>();
+    wrapper.setUserDetailsService(userService);
+    return wrapper;
   }
 
 }

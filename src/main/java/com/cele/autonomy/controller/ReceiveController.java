@@ -17,12 +17,12 @@ public class ReceiveController {
   public String ping() {
 
     logger.debug("Ping Start !!");
-    logger.warn("Ping warn start !!");
-    logger.info("Ping info start !!");
+    logger.warn("Ping warn start !!!");
+    logger.info("Ping info start !!!");
 
     String accountType = entitlementService.getAccountType("X1220701");
 
-    return accountType;
+    return accountType + "!!";
   }
 
   @GetMapping("/ping2")
