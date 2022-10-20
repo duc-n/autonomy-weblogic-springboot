@@ -23,17 +23,12 @@ public class SiteMinderServletFilter implements Filter {
 
   @Override
   public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
-    logger.debug("SM_USER Add user to header");
+
     HttpServletRequest req = (HttpServletRequest) request;
     if ((!req.getRequestURI().startsWith("/autonomyView/resources/") && !req.getRequestURI().startsWith("/autonomyView/EIPRedirect"))
         || req.getRequestURI().contains("index.html")) {
       HeaderMapRequestWrapper requestWrapper = new HeaderMapRequestWrapper(req);
       SSOUserContext userContext = SSOClientHelper.getAuthenticatedUserContext(req);
-
-      logger.debug("SM_USER Add user to header");
-
-      requestWrapper.addHeader("SM_USER", "FR1E2029");
-      chain.doFilter(requestWrapper, response);
 
       if (null != userContext) {
         requestWrapper.addHeader("SM_USER", userContext.getEipUserName().toUpperCase());

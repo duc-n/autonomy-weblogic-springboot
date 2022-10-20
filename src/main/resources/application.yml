@@ -4,6 +4,11 @@ server:
    
 #datasource
 spring:
+   mvc:
+      hiddenmethod:
+         filter:
+            enabled: true
+
    datasource:
       # Oracle settings
       
